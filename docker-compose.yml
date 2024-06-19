@@ -1,60 +1,16 @@
 version: '3'
 
 services:
-  db:
-    image: mariadb:latest
-    ports:
-      - "3306:3306"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootPassword
-      MYSQL_DATABASE: postfixadmin
-      MYSQL_USER: postfixadmin
-      MYSQL_PASSWORD: postfixadminPassword
-    volumes:
-      - db_data:/var/lib/mysql
-
-  postfixadmin:
-    image: postfixadmin:apache
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
-    environment:
-      POSTFIXADMIN_DB_TYPE: mysqli
-      POSTFIXADMIN_DB_HOST: db
-      POSTFIXADMIN_DB_USER: postfixadmin
-      POSTFIXADMIN_DB_PASSWORD: postfixadminPassword
-      POSTFIXADMIN_DB_NAME: postfixadmin
-      POSTFIXADMIN_SMTP_SERVER: postfix
-      POSTFIXADMIN_SMTP_PORT: 25
-      POSTFIXADMIN_ENCRYPT: md5crypt
-      POSTFIXADMIN_DKIM: YES
-      POSTFIXADMIN_DKIM_ALL_ADMINS: NO
-    restart: on-failure
-
   postfix:
     image: phplist/postfix
     ports:
       - "25:25"
       - "465:465"
       - "587:587"
-    hostname: iutnc-503-06.iutnc.site.univ-lorraine.fr
-    domainname: iutnc.site.univ-lorraine.fr
+    hostname: localhost  
     volumes:
       - ./postfix-main.cf:/etc/postfix/main.cf
     environment:
-      MAIL_DOMAIN: iutnc.site.univ-lorraine.fr
+      MAIL_DOMAIN: localhost  
     network_mode: host
-  dovecot:
-    image: dovecot/dovecot
-    volumes:
-      - ./dovecot.conf:/etc/dovecot/dovecot.conf
-    depends_on:
-      - postfix
-    environment:
-      - MAIL_DOMAIN=iutnc.site.univ-lorraine.fr
-
-volumes:
-  db_data:
 
