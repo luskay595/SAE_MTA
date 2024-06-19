@@ -1,7 +1,7 @@
 # Nom du serveur Postfix
-myhostname = localhost
+myhostname = mail.example.com
 # Domaine que Postfix considérera comme local
-mydomain = localhost
+mydomain = example.com
 # Réseaux locaux pour lesquels Postfix ne fera pas de vérification SPF
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 # Emplacement des boîtes aux lettres des utilisateurs locaux
@@ -11,8 +11,8 @@ mailbox_size_limit = 0
 # Caractère délimiteur pour les destinataires (peut être ajusté selon vos besoins)
 recipient_delimiter = +
 # Interfaces réseau sur lesquelles Postfix acceptera les connexions
-inet_interfaces = localhost
+inet_interfaces = all
 # Ne relaie pas les mails en dehors du réseau local
-inet_protocols = ipv4
+inet_protocols = all
 
 

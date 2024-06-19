@@ -7,10 +7,12 @@ services:
       - "25:25"
       - "465:465"
       - "587:587"
-    hostname: localhost  
+    hostname: mail.example.com  # Nom d'hôte conforme à la configuration DNS
     volumes:
       - ./postfix-main.cf:/etc/postfix/main.cf
     environment:
-      MAIL_DOMAIN: localhost  
+      MAIL_DOMAIN: example.com  # Domaine de messagerie conforme à la configuration DNS
     network_mode: host
+    dns:
+      - 100.64.85.13  # Utilisation de l'adresse IP du serveur DNS local
 
