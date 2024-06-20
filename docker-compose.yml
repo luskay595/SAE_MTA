@@ -2,7 +2,7 @@ version: '3'
 
 services:
   postfix:
-    image: phplist/postfix
+    build: .
     ports:
       - "25:25"
       - "465:465"
