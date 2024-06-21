@@ -21,6 +21,5 @@ lmtp      unix  -       -       -       -       -       lmtp
 anvil     unix  -       -       -       -       1       anvil
 scache    unix  -       -       -       -       1       scache
 
-# Service de greylisting
 greylist  unix  -       n       n       -       0       spawn
   user=nobody argv=/usr/local/bin/greylist
