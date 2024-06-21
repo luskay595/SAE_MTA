@@ -35,11 +35,9 @@ void check_greylist(const char *ip, const char *recipient) {
     uint32_t flags;
     time_t now = time(NULL);
 
-    // Créer la clé unique pour ce triplet
     snprintf(key, sizeof(key), "%s|%s", ip, recipient);
     key_length = strlen(key);
 
-    // Initialisation de Memcached
     memc = memcached_create(NULL);
     servers = memcached_server_list_append(servers, MEMCACHED_SERVER, MEMCACHED_PORT, &rc);
     rc = memcached_server_push(memc, servers);
@@ -49,7 +47,6 @@ void check_greylist(const char *ip, const char *recipient) {
         exit(1);
     }
 
-    // Vérifier si l'email est déjà greylisté
     value = memcached_get(memc, key, key_length, &value_length, &flags, &rc);
     if (rc == MEMCACHED_SUCCESS) {
         time_t timestamp = (time_t) strtol(value, NULL, 10);
@@ -72,7 +69,6 @@ void check_greylist(const char *ip, const char *recipient) {
         log_error("Erreur lors de la récupération de la greylist");
     }
 
-    // Libération des ressources
     memcached_free(memc);
 }
 
@@ -81,24 +77,17 @@ int main() {
     char ip[256];
     char recipient[256];
 
-    // Lire chaque ligne d'entrée et traiter les champs pertinents
     while (fgets(line, sizeof(line), stdin) != NULL) {
-        // Recherche du champ client_address
         if (strncmp(line, "client_address=", 15) == 0) {
             strncpy(ip, line + 15, sizeof(ip));
-            ip[strcspn(ip, "\n")] = 0; // Supprimer le saut de ligne
+            ip[strcspn(ip, "\n")] = 0; 
         }
-        // Recherche du champ recipient
         else if (strncmp(line, "recipient=", 10) == 0) {
             strncpy(recipient, line + 10, sizeof(recipient));
-            recipient[strcspn(recipient, "\n")] = 0; // Supprimer le saut de ligne
+            recipient[strcspn(recipient, "\n")] = 0;
         }
     }
-
-    // Logger les informations récupérées
     log_info(ip, recipient);
-
-    // Vérifier la greylist avec les informations récupérées
     check_greylist(ip, recipient);
 
     return 0;
