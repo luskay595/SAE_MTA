@@ -3,7 +3,7 @@ version: '3'
 services:
   postfix:
     build: .
-    hostname: mail.example.com  # Nom d'hôte conforme à la configuration DNS
+    hostname: mail.example.com  
     volumes:
       - ./postfix-main.cf:/etc/postfix/main.cf
       - ./postfix-master.cf:/etc/postfix/master.cf
