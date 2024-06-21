@@ -1,21 +1,12 @@
-# Nom du serveur Postfix
 myhostname = mail.example.com
-# Domaine que Postfix considérera comme local
 mydomain = example.com
-# Réseaux locaux pour lesquels Postfix ne fera pas de vérification SPF
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 100.64.85.0/24
-# Emplacement des boîtes aux lettres des utilisateurs locaux
 mailbox_command =
-# Où livrer les courriers locaux (ne pas changer)
 mailbox_size_limit = 0
-# Caractère délimiteur pour les destinataires (peut être ajusté selon vos besoins)
 recipient_delimiter = +
-# Interfaces réseau sur lesquelles Postfix acceptera les connexions
 inet_interfaces = all
-# Ne relaie pas les mails en dehors du réseau local
 inet_protocols = all
 disable_dns_lookups = yes
-# Utilisation du script de greylisting
 smtpd_recipient_restrictions =
     permit_mynetworks
     reject_unauth_destination
