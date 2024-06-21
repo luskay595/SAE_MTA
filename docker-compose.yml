@@ -8,10 +8,10 @@ services:
       - ./postfix-main.cf:/etc/postfix/main.cf
       - ./postfix-master.cf:/etc/postfix/master.cf
     environment:
-      MAIL_DOMAIN: example.com  # Domaine de messagerie conforme à la configuration DNS
+      MAIL_DOMAIN: example.com  
     network_mode: host
     dns:
-      - 100.64.85.13  # Utilisation de l'adresse IP du serveur DNS local
+      - 100.64.85.13  
 
   memcached:
     image: memcached:alpine
